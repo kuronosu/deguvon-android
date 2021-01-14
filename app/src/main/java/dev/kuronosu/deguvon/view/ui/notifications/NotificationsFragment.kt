@@ -1,4 +1,4 @@
-package dev.kuronosu.deguvon.ui.notifications
+package dev.kuronosu.deguvon.view.ui.notifications
 
 import android.os.Bundle
 import android.view.LayoutInflater

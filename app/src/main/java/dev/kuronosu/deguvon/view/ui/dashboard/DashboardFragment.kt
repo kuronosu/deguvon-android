@@ -1,4 +1,4 @@
-package dev.kuronosu.deguvon.ui.dashboard
+package dev.kuronosu.deguvon.view.ui.dashboard
 
 import android.os.Bundle
 import android.view.LayoutInflater
