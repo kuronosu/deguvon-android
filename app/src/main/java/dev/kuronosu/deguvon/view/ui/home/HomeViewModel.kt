@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import dev.kuronosu.deguvon.datasource.DataSourceCallback
 import dev.kuronosu.deguvon.datasource.LatestEpisodesRepository
 import dev.kuronosu.deguvon.model.LatestEpisode
+import dev.kuronosu.deguvon.model.LatestEpisodeAnimeData
 
 class HomeViewModel : ViewModel() {
 
@@ -17,6 +18,8 @@ class HomeViewModel : ViewModel() {
     fun refresh(context: Context) {
         LatestEpisodesRepository(context).getAll(object : DataSourceCallback<List<LatestEpisode>> {
             override fun onError(error: String) {
+                val le = LatestEpisode("", "", "", LatestEpisodeAnimeData(0, ""))
+                _latestEpisodes.postValue(arrayOf(le,le,le,le,le,le,le,le,le,le,le,le,le,le,le,le,le,le,le,le).toList())
                 Toast.makeText(
                     context,
                     "Error cargando los últimos episodios\n$error",

@@ -62,8 +62,8 @@ class HomeFragment : Fragment(), LatestEpisodesListener {
     }
 
     private fun observeViewModel() {
-        viewModel.latestEpisodes.observe(viewLifecycleOwner, { schedule ->
-            latestEpisodesAdapter.updateData(schedule)
+        viewModel.latestEpisodes.observe(viewLifecycleOwner, { latestEpisodes ->
+            latestEpisodesAdapter.updateData(latestEpisodes)
             binding.rvLatestEpisodes.visibility = View.VISIBLE
             binding.shimmerPlaceholderHomeLatestEpisodes.visibility = View.GONE
         })

@@ -26,8 +26,11 @@ class LatestEpisodesAdapter(val latestEpisodesListener: LatestEpisodesListener) 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val latestEpisode = latestEpisodes[position]
-        holder.tvLatestEpisodeAnimeName.text = latestEpisode.anime.name
-        holder.tvLatestEpisodeCapi.text = latestEpisode.capi.replace("Episodio ", "")
+        if (latestEpisode.anime.name.isEmpty()) holder.tvLatestEpisodeAnimeName.visibility =
+            View.INVISIBLE
+        else holder.tvLatestEpisodeAnimeName.text = latestEpisode.anime.name
+        if (latestEpisode.capi.isEmpty()) holder.tvLatestEpisodeCapi.visibility = View.INVISIBLE
+        else holder.tvLatestEpisodeCapi.text = latestEpisode.capi.replace("Episodio ", "")
         val color = ContextCompat.getColor(
             holder.ivLatestEpisodeImage.context,
             R.color.white
@@ -69,8 +72,5 @@ class LatestEpisodesAdapter(val latestEpisodesListener: LatestEpisodesListener) 
         val tvLatestEpisodeAnimeName: TextView =
             itemView.findViewById(R.id.latest_episode_anime_name)
         val tvLatestEpisodeCapi: TextView = itemView.findViewById(R.id.latest_episode_capi)
-//        val shimmerLoadHomeItem: ShimmerFrameLayout =
-//            itemView.findViewById(R.id.shimmer_load_home_item)
-
     }
 }
