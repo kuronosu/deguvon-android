@@ -1,44 +1,32 @@
 package dev.kuronosu.deguvon.view.ui.home
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dev.kuronosu.deguvon.datasource.DataSourceCallback
+import dev.kuronosu.deguvon.datasource.LatestEpisodesRepository
 import dev.kuronosu.deguvon.model.LatestEpisode
-import dev.kuronosu.deguvon.network.ApiAdapter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.async
 
-class HomeViewModel : ViewModel(), CoroutineScope by MainScope() {
+class HomeViewModel : ViewModel() {
 
     private val _latestEpisodes = MutableLiveData<List<LatestEpisode>>()
     val latestEpisodes: LiveData<List<LatestEpisode>> = _latestEpisodes
-    var isLoading = MutableLiveData<Boolean>()
 
-    fun refresh() {
-        fetchLatestEpisodes()
-    }
-
-    private fun fetchLatestEpisodes() {
-        async {
-            processStarted()
-            try {
-                val response = ApiAdapter.apiClient.getLatest()
-                if (response.isSuccessful && response.body() != null) {
-                    val items = response.body()!!
-                    _latestEpisodes.postValue(items)
-                }
-            } catch (e: Exception) {
+    fun refresh(context: Context) {
+        LatestEpisodesRepository(context).getAll(object : DataSourceCallback<List<LatestEpisode>> {
+            override fun onError(error: String) {
+                Toast.makeText(
+                    context,
+                    "Error cargando los últimos episodios\n$error",
+                    Toast.LENGTH_LONG
+                ).show()
             }
-            processFinished()
-        }
-    }
 
-    private fun processStarted() {
-        isLoading.value = true
-    }
-
-    private fun processFinished() {
-        isLoading.value = false
+            override fun onSuccess(t: List<LatestEpisode>) {
+                _latestEpisodes.postValue(t)
+            }
+        })
     }
 }

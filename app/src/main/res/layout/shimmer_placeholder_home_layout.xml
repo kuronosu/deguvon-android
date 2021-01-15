@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewUserName"
+        android:id="@+id/textViewPlaceholderCategory"
         style="@style/TextAppearance.AppCompat.Large"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -26,12 +26,13 @@
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewUserName">
+        app:layout_constraintTop_toBottomOf="@id/textViewPlaceholderCategory">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="14dp">
+            android:layout_marginVertical="10dp"
+            android:layout_marginHorizontal="5dp">
 
             <include layout="@layout/shimmer_item_card_placeholder" />
 

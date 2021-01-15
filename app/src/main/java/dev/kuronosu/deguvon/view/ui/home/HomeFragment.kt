@@ -65,11 +65,8 @@ class HomeFragment : Fragment(), LatestEpisodesListener {
         viewModel.latestEpisodes.observe(viewLifecycleOwner, { schedule ->
             latestEpisodesAdapter.updateData(schedule)
             binding.rvLatestEpisodes.visibility = View.VISIBLE
-            binding.shimmerPlaceholderHome.visibility = View.INVISIBLE
+            binding.shimmerPlaceholderHomeLatestEpisodes.visibility = View.GONE
         })
-        /*viewModel.isLoading.observe(viewLifecycleOwner, {
-            if (it != null) binding..isRefreshing = it
-        })*/
     }
 
     override fun onDestroyView() {
@@ -80,7 +77,7 @@ class HomeFragment : Fragment(), LatestEpisodesListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.refresh()
+        viewModel.refresh(view.context)
     }
 
     override fun onEpisodeClicked(episode: LatestEpisode, position: Int) {
