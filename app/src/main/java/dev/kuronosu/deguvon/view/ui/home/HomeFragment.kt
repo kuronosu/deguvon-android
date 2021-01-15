@@ -1,6 +1,5 @@
 package dev.kuronosu.deguvon.view.ui.home
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,28 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import dev.kuronosu.deguvon.R
 import dev.kuronosu.deguvon.databinding.FragmentHomeBinding
 import dev.kuronosu.deguvon.model.LatestEpisode
+import dev.kuronosu.deguvon.utils.MarginItemDecorationHorizontalLayout
 import dev.kuronosu.deguvon.view.adapter.LatestEpisodesAdapter
 import dev.kuronosu.deguvon.view.adapter.LatestEpisodesListener
-
-class MarginItemDecoration(private val spaceHeight: Int) : RecyclerView.ItemDecoration() {
-    override fun getItemOffsets(
-        outRect: Rect, view: View,
-        parent: RecyclerView, state: RecyclerView.State
-    ) {
-        with(outRect) {
-            if (parent.getChildAdapterPosition(view) == 0) {
-                left = spaceHeight
-            }
-            top = spaceHeight
-            right = spaceHeight
-            bottom = spaceHeight
-        }
-    }
-}
 
 
 class HomeFragment : Fragment(), LatestEpisodesListener {
@@ -45,7 +28,7 @@ class HomeFragment : Fragment(), LatestEpisodesListener {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.rvLatestEpisodes.addItemDecoration(
-            MarginItemDecoration(
+            MarginItemDecorationHorizontalLayout(
                 resources.getDimension(R.dimen.home_rv_padding).toInt()
             )
         )
@@ -73,7 +56,6 @@ class HomeFragment : Fragment(), LatestEpisodesListener {
         super.onDestroyView()
         _binding = null
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

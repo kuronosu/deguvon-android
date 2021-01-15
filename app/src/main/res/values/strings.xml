@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Deguvon</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_search">Buscar</string>
+    <string name="title_dashboard">Mas</string>
     <string name="anime_image">Anime image</string>
     <string name="anime_cover_shimmer">Anime cover shimmer</string>
     <string name="category">Categoria</string>
