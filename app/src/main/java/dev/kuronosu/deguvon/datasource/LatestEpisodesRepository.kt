@@ -8,13 +8,15 @@ import dev.kuronosu.deguvon.model.LatestEpisode
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-class LatestEpisodesRepository(applicationContext: Context) :
-    DataSource<LatestEpisode, String>(applicationContext) {
+class LatestEpisodesRepository(applicationContext: Context) : DataSource(applicationContext) {
 
-    override fun getAll(callback: DataSourceCallback<List<LatestEpisode>>) {
+    fun getAll(callback: DataSourceCallback<List<LatestEpisode>>) {
+        val dbItems = db.latestEpisodesDAO().getAll()
+        callback.onSuccess(
+            LatestEpisodeRoomModelListMapper().map(dbItems),
+            DataSourceType.Local
+        )
         MainScope().launch {
-            val dbItems = db.latestEpisodesDAO().getAll()
-            callback.onSuccess(LatestEpisodeRoomModelListMapper().map(dbItems))
             try {
                 val response = webservice.getLatestEpisodes()
                 if (response.isSuccessful && response.body() != null) {
@@ -28,7 +30,7 @@ class LatestEpisodesRepository(applicationContext: Context) :
                             )
                         )
                     }
-                    callback.onSuccess(list)
+                    callback.onSuccess(list, DataSourceType.Remote)
                 } else {
                     if (dbItems.isEmpty()) {
                         callback.onError(response.message())

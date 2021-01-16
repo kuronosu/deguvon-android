@@ -6,9 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dev.kuronosu.deguvon.datasource.DataSourceCallback
+import dev.kuronosu.deguvon.datasource.DataSourceType
 import dev.kuronosu.deguvon.datasource.LatestEpisodesRepository
+import dev.kuronosu.deguvon.model.Generic
 import dev.kuronosu.deguvon.model.LatestEpisode
-import dev.kuronosu.deguvon.model.LatestEpisodeAnimeData
 
 class HomeViewModel : ViewModel() {
 
@@ -18,8 +19,13 @@ class HomeViewModel : ViewModel() {
     fun refresh(context: Context) {
         LatestEpisodesRepository(context).getAll(object : DataSourceCallback<List<LatestEpisode>> {
             override fun onError(error: String) {
-                val le = LatestEpisode("", "", "", LatestEpisodeAnimeData(0, ""))
-                _latestEpisodes.postValue(arrayOf(le,le,le,le,le,le,le,le,le,le,le,le,le,le,le,le,le,le,le,le).toList())
+                val le = LatestEpisode("", "", "", Generic(0, ""))
+                _latestEpisodes.postValue(
+                    arrayListOf(
+                        le, le, le, le, le, le, le, le, le, le,
+                        le, le, le, le, le, le, le, le, le, le
+                    )
+                )
                 Toast.makeText(
                     context,
                     "Error cargando los últimos episodios\n$error",
@@ -27,8 +33,9 @@ class HomeViewModel : ViewModel() {
                 ).show()
             }
 
-            override fun onSuccess(t: List<LatestEpisode>) {
-                _latestEpisodes.postValue(t)
+            override fun onSuccess(data: List<LatestEpisode>, sourceType: DataSourceType) {
+                if (!(data.isEmpty() && sourceType == DataSourceType.Local))
+                    _latestEpisodes.postValue(data)
             }
         })
     }

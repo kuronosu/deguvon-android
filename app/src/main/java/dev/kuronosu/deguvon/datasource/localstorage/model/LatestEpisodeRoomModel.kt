@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 
 data class LatestEpisodeAnimeDataRoomModel(
-    val aid: String,
+    val id: String,
     val name: String
 )
 

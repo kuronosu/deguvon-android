@@ -3,15 +3,15 @@ package dev.kuronosu.deguvon.datasource.localstorage.mapper
 import coil.map.Mapper
 import dev.kuronosu.deguvon.datasource.localstorage.model.LatestEpisodeAnimeDataRoomModel
 import dev.kuronosu.deguvon.datasource.localstorage.model.LatestEpisodeRoomModel
+import dev.kuronosu.deguvon.model.Generic
 import dev.kuronosu.deguvon.model.LatestEpisode
-import dev.kuronosu.deguvon.model.LatestEpisodeAnimeData
 
 class LatestEpisodeRoomModelMapper : Mapper<LatestEpisodeRoomModel, LatestEpisode> {
     override fun map(data: LatestEpisodeRoomModel) = LatestEpisode(
         url = data.url,
         image = data.image,
         capi = data.number,
-        anime = LatestEpisodeAnimeData(data.anime.aid.toInt(), data.anime.name)
+        anime = Generic(data.anime.id.toInt(), data.anime.name)
     )
 }
 

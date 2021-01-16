@@ -57,9 +57,9 @@ class HomeFragment : Fragment(), LatestEpisodesListener {
         _binding = null
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.refresh(view.context)
+    override fun onStart() {
+        super.onStart()
+        viewModel.refresh(requireContext())
     }
 
     override fun onEpisodeClicked(episode: LatestEpisode, position: Int) {
