@@ -28,3 +28,16 @@ class AnimeRoomModelMapper(
         relations = AnimeRelationRoomModelMapper().map(data.relations)
     )
 }
+
+class AnimeRoomModelListMapper(
+    private val states: List<StateRoomModel>,
+    private val types: List<TypeRoomModel>,
+    private val genres: List<GenreRoomModel>
+) : Mapper<List<AnimeRoomModel>, List<Anime>> {
+    override fun map(data: List<AnimeRoomModel>): List<Anime> {
+        val animeRoomMapper = AnimeRoomModelMapper(states, types, genres)
+        val list = ArrayList<Anime>()
+        data.forEach { list.add(animeRoomMapper.map(it)) }
+        return list
+    }
+}
