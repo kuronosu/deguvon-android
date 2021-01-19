@@ -4,10 +4,9 @@ import android.content.Context
 import dev.kuronosu.deguvon.datasource.localstorage.dao.clearDirectory
 import dev.kuronosu.deguvon.datasource.localstorage.dao.insertDirectory
 import dev.kuronosu.deguvon.datasource.localstorage.mapper.AnimeRoomModelListMapper
-import dev.kuronosu.deguvon.datasource.localstorage.mapper.GenericListToGenericRoomModelListMapper
-import dev.kuronosu.deguvon.datasource.localstorage.model.GenreRoomModel
-import dev.kuronosu.deguvon.datasource.localstorage.model.StateRoomModel
-import dev.kuronosu.deguvon.datasource.localstorage.model.TypeRoomModel
+import dev.kuronosu.deguvon.datasource.localstorage.mapper.GenericListToGenreRoomModelListMapper
+import dev.kuronosu.deguvon.datasource.localstorage.mapper.GenericListToStateRoomModelListMapper
+import dev.kuronosu.deguvon.datasource.localstorage.mapper.GenericListToTypeRoomModelListMapper
 import dev.kuronosu.deguvon.datasource.mapper.AnimeNetworkListToAnimeRoomListMapper
 import dev.kuronosu.deguvon.datasource.network.mapper.DirectoryNetworkModelMapper
 import dev.kuronosu.deguvon.datasource.network.mapper.GenericNetworkModelListMapper
@@ -27,14 +26,14 @@ class AnimeRepository(applicationContext: Context) : DataSource(applicationConte
                         val networkDirectory = response.body()!!
                         val directory = DirectoryNetworkModelMapper().map(networkDirectory)
                         db.animeDAO().clearDirectory()
-                        val statesMapper = GenericListToGenericRoomModelListMapper<StateRoomModel>()
-                        val typesMapper = GenericListToGenericRoomModelListMapper<TypeRoomModel>()
-                        val genresMapper = GenericListToGenericRoomModelListMapper<GenreRoomModel>()
+                        val statesMapper = GenericListToStateRoomModelListMapper()
+                        val typesMapper = GenericListToTypeRoomModelListMapper()
+                        val genresMapper = GenericListToGenreRoomModelListMapper()
                         db.animeDAO().insertDirectory(
                             statesMapper.map(GenericNetworkModelListMapper().map(networkDirectory.states)),
                             typesMapper.map(GenericNetworkModelListMapper().map(networkDirectory.types)),
                             genresMapper.map(GenericNetworkModelListMapper().map(networkDirectory.genres)),
-                            AnimeNetworkListToAnimeRoomListMapper().map(networkDirectory.animes.values.toList())
+                            AnimeNetworkListToAnimeRoomListMapper().map(networkDirectory.animes)
                         )
                         callback.onSuccess(directory, DataSourceType.Remote)
                     } else {

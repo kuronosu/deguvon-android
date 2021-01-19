@@ -6,5 +6,5 @@ data class DirectoryNetworkModel(
     @SerializedName("states") val states: List<GenericNetworkModel>,
     @SerializedName("types") val types: List<GenericNetworkModel>,
     @SerializedName("genres") val genres: List<GenericNetworkModel>,
-    @SerializedName("animes") val animes: HashMap<Int, AnimeNetworkModel>
+    @SerializedName("animes") val animes: List<AnimeNetworkModel>
 )

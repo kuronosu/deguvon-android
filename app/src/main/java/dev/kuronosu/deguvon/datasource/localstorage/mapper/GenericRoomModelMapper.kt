@@ -2,6 +2,9 @@ package dev.kuronosu.deguvon.datasource.localstorage.mapper
 
 import coil.map.Mapper
 import dev.kuronosu.deguvon.datasource.localstorage.model.GenericRoomModel
+import dev.kuronosu.deguvon.datasource.localstorage.model.GenreRoomModel
+import dev.kuronosu.deguvon.datasource.localstorage.model.StateRoomModel
+import dev.kuronosu.deguvon.datasource.localstorage.model.TypeRoomModel
 import dev.kuronosu.deguvon.model.Generic
 
 class GenericRoomModelMapper : Mapper<GenericRoomModel, Generic> {
@@ -17,18 +20,44 @@ class GenericListRoomModelMapper : Mapper<List<GenericRoomModel>, List<Generic>>
     }
 }
 
-class GenericToGenericRoomModelMapper<T : GenericRoomModel> : Mapper<Generic, T> {
-    override fun map(data: Generic): T =
-        GenericRoomModel(id = data.id.toString(), name = data.name) as T
+class GenericToStateRoomModelMapper : Mapper<Generic, StateRoomModel> {
+    override fun map(data: Generic) = StateRoomModel(id = data.id.toString(), name = data.name)
 }
 
-class GenericListToGenericRoomModelListMapper<T : GenericRoomModel> :
-    Mapper<List<Generic>, List<T>> {
-    override fun map(data: List<Generic>): List<T> {
-        val mapper = GenericToGenericRoomModelMapper<T>()
-        val list = ArrayList<T>()
+class GenericToTypeRoomModelMapper : Mapper<Generic, TypeRoomModel> {
+    override fun map(data: Generic) = TypeRoomModel(id = data.id.toString(), name = data.name)
+}
+
+class GenericToGenreRoomModelMapper : Mapper<Generic, GenreRoomModel> {
+    override fun map(data: Generic) = GenreRoomModel(id = data.id.toString(), name = data.name)
+}
+
+class GenericListToStateRoomModelListMapper :
+    Mapper<List<Generic>, List<StateRoomModel>> {
+    override fun map(data: List<Generic>): List<StateRoomModel> {
+        val mapper = GenericToStateRoomModelMapper()
+        val list = ArrayList<StateRoomModel>()
         data.forEach { list.add(mapper.map(it)) }
         return list
     }
+}
 
+class GenericListToTypeRoomModelListMapper :
+    Mapper<List<Generic>, List<TypeRoomModel>> {
+    override fun map(data: List<Generic>): List<TypeRoomModel> {
+        val mapper = GenericToTypeRoomModelMapper()
+        val list = ArrayList<TypeRoomModel>()
+        data.forEach { list.add(mapper.map(it)) }
+        return list
+    }
+}
+
+class GenericListToGenreRoomModelListMapper :
+    Mapper<List<Generic>, List<GenreRoomModel>> {
+    override fun map(data: List<Generic>): List<GenreRoomModel> {
+        val mapper = GenericToGenreRoomModelMapper()
+        val list = ArrayList<GenreRoomModel>()
+        data.forEach { list.add(mapper.map(it)) }
+        return list
+    }
 }
