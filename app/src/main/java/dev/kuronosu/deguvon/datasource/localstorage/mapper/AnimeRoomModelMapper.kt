@@ -1,7 +1,10 @@
 package dev.kuronosu.deguvon.datasource.localstorage.mapper
 
 import coil.map.Mapper
-import dev.kuronosu.deguvon.datasource.localstorage.model.*
+import dev.kuronosu.deguvon.datasource.localstorage.model.AnimeRoomModel
+import dev.kuronosu.deguvon.datasource.localstorage.model.GenreRoomModel
+import dev.kuronosu.deguvon.datasource.localstorage.model.StateRoomModel
+import dev.kuronosu.deguvon.datasource.localstorage.model.TypeRoomModel
 import dev.kuronosu.deguvon.model.Anime
 
 class AnimeRoomModelMapper(
@@ -15,8 +18,8 @@ class AnimeRoomModelMapper(
         slug = data.slug,
         nextEpisodeDate = data.nextEpisodeDate,
         url = data.url,
-        state = GenericRoomModelMapper().map(states.find { it.id == data.state } as GenericRoomModel),
-        type = GenericRoomModelMapper().map(types.find { it.id == data.state } as GenericRoomModel),
+        state = GenericRoomModelMapper().map(states.find { it.id == data.state }!!),
+        type = GenericRoomModelMapper().map(types.find { it.id == data.state }!!),
         genres = GenericListRoomModelMapper().map(genres.filter { it.id in data.genres }),
         otherNames = data.otherNames,
         synopsis = data.synopsis,
