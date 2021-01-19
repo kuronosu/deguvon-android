@@ -30,7 +30,8 @@ data class AnimeRoomModel(
     val url: String,
     val state: String,
     val type: String,
-    // TODO val genres: List<String>, // Is Many TO Many
+    @field:TypeConverters(ListStringConverter::class)
+    val genres: List<String>, // Is Many TO Many
     @field:TypeConverters(ListStringConverter::class)
     @ColumnInfo(name = "other_names") val otherNames: List<String>,
     val synopsis: String,
