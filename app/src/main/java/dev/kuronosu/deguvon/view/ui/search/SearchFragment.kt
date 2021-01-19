@@ -4,28 +4,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import dev.kuronosu.deguvon.R
+import dev.kuronosu.deguvon.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment() {
 
-    private lateinit var searchViewModel: SearchViewModel
+    private lateinit var viewModel: SearchViewModel
+
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        searchViewModel =
-            ViewModelProvider(this).get(SearchViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_notifications, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
-        searchViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+        viewModel.text.observe(viewLifecycleOwner, {
+            binding.searchResultCountText.text = it
         })
-        return root
+        binding.downloadDirectoryBtn.setOnClickListener {
+            viewModel.downloadDirectory(requireContext())
+        }
+        return binding.root
     }
 }

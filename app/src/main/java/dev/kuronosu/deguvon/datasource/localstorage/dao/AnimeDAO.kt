@@ -15,7 +15,7 @@ interface AnimeDAO {
     fun insertAnime(anime: AnimeRoomModel)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAnimes(anime: List<AnimeRoomModel>)
+    fun insertAnimes(animes: List<AnimeRoomModel>)
 
     @Query("select * FROM animes")
     fun getAnimes(): List<AnimeRoomModel>
@@ -76,4 +76,23 @@ interface AnimeDAO {
 
     @Query("DELETE FROM anime_type")
     fun clearTypes()
+}
+
+fun AnimeDAO.clearDirectory() {
+    this.clearAnimes()
+    this.clearGenres()
+    this.clearStates()
+    this.clearTypes()
+}
+
+fun AnimeDAO.insertDirectory(
+    states: List<StateRoomModel>,
+    types: List<TypeRoomModel>,
+    genres: List<GenreRoomModel>,
+    animes: List<AnimeRoomModel>
+) {
+    this.insertStates(states)
+    this.insertTypes(types)
+    this.insertGenres(genres)
+    this.insertAnimes(animes)
 }

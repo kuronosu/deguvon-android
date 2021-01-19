@@ -18,4 +18,3 @@ data class Anime(
     val relations: List<Relation>,
     val episodes: List<Episode>
 )
-
