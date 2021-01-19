@@ -21,7 +21,7 @@ data class EpisodeRoomModel(
     val img: String,
 )
 
-@Entity(tableName = "anime")
+@Entity(tableName = "animes")
 data class AnimeRoomModel(
     @PrimaryKey val flvid: String,
     val name: String,

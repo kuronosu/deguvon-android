@@ -14,34 +14,66 @@ interface AnimeDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAnime(anime: AnimeRoomModel)
 
-    @Query("select * FROM anime")
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAnimes(anime: List<AnimeRoomModel>)
+
+    @Query("select * FROM animes")
     fun getAnimes(): List<AnimeRoomModel>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertState(state: StateRoomModel)
+    @Query("select * FROM animes where flvid LIKE :aid")
+    fun getAnimeByID(aid: String): AnimeRoomModel
 
+    @Query("DELETE FROM animes")
+    fun clearAnimes()
+
+    // Genres
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertGenre(genre: GenreRoomModel)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertType(type: TypeRoomModel)
+    fun insertGenres(genres: List<GenreRoomModel>)
+
+    @Query("select * FROM anime_genre")
+    fun getGenres(): List<GenreRoomModel>
+
+    @Query("select * FROM anime_genre where id LIKE :id")
+    fun getGenreByID(id: String): GenreRoomModel
+
+    @Query("select * FROM anime_genre where id IN(:ids)")
+    fun getGenresByIDs(ids: List<String>): List<GenreRoomModel>
+
+    @Query("DELETE FROM anime_genre")
+    fun clearGenres()
+
+    // States
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertState(state: StateRoomModel)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertStates(states: List<StateRoomModel>)
 
+    @Query("select * FROM anime_state")
+    fun getStates(): List<StateRoomModel>
+
+    @Query("select * FROM anime_state where id LIKE :id")
+    fun getStateByID(id: String): StateRoomModel
+
+    @Query("DELETE FROM anime_state")
+    fun clearStates()
+
+    // Types
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertGenres(genres: List<GenreRoomModel>)
+    fun insertType(type: TypeRoomModel)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTypes(types: List<TypeRoomModel>)
-}
 
-fun AnimeDAO.insertAll(
-    states: List<StateRoomModel>,
-    genres: List<GenreRoomModel>,
-    types: List<TypeRoomModel>
-) {
-    this.insertStates(states)
-    this.insertGenres(genres)
-    this.insertTypes(types)
+    @Query("select * FROM anime_type")
+    fun getTypes(): List<TypeRoomModel>
+
+    @Query("select * FROM anime_type where id LIKE :id")
+    fun getTypesByID(id: String): TypeRoomModel
+
+    @Query("DELETE FROM anime_type")
+    fun clearTypes()
 }
