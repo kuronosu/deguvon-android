@@ -19,12 +19,12 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
-        viewModel.text.observe(viewLifecycleOwner, {
-            binding.searchResultCountText.text = it
+        viewModel.animes.observe(viewLifecycleOwner, {
+            binding.searchResultCountText.text = it.size.toString()
         })
         binding.downloadDirectoryBtn.setOnClickListener {
             viewModel.downloadDirectory(requireContext())

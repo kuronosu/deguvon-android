@@ -11,21 +11,22 @@ import dev.kuronosu.deguvon.datasource.mapper.AnimeNetworkListToAnimeRoomListMap
 import dev.kuronosu.deguvon.datasource.network.mapper.DirectoryNetworkModelMapper
 import dev.kuronosu.deguvon.datasource.network.mapper.GenericNetworkModelListMapper
 import dev.kuronosu.deguvon.model.Anime
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
 class AnimeRepository(applicationContext: Context) : DataSource(applicationContext) {
     fun getDirectory(callback: DataSourceCallback<List<Anime>>, forceRemote: Boolean = false) {
-        callback.onSuccess(getDirectoryFromDB(), DataSourceType.Local)
-        if (forceRemote)
-            MainScope().launch {
+        CoroutineScope(Dispatchers.IO).launch {
+            val data = getDirectoryFromDB()
+            callback.onSuccess(data, DataSourceType.Local)
+            if (forceRemote)
                 try {
                     val response = webservice.getDirectory()
                     if (response.isSuccessful && response.body() != null) {
                         val networkDirectory = response.body()!!
                         val directory = DirectoryNetworkModelMapper().map(networkDirectory)
-                        db.animeDAO().clearDirectory()
                         val statesMapper = GenericListToStateRoomModelListMapper()
                         val typesMapper = GenericListToTypeRoomModelListMapper()
                         val genresMapper = GenericListToGenreRoomModelListMapper()
@@ -42,7 +43,7 @@ class AnimeRepository(applicationContext: Context) : DataSource(applicationConte
                 } catch (e: Exception) {
                     callback.onError(e.message!!)
                 }
-            }
+        }
     }
 
     private fun getDirectoryFromDB(): List<Anime> {

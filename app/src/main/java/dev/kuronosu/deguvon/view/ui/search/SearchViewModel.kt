@@ -12,10 +12,8 @@ import dev.kuronosu.deguvon.model.Anime
 
 class SearchViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "Animes obtenido: 0"
-    }
-    val text: LiveData<String> = _text
+    private val _animes = MutableLiveData<List<Anime>>()
+    val animes: LiveData<List<Anime>> = _animes
 
     fun downloadDirectory(context: Context) {
         AnimeRepository(context).getDirectory(object : DataSourceCallback<List<Anime>> {
@@ -28,8 +26,8 @@ class SearchViewModel : ViewModel() {
             }
 
             override fun onSuccess(data: List<Anime>, sourceType: DataSourceType) {
-                _text.postValue("Animes obtenido: ${data.size}")
+                _animes.postValue(data)
             }
-        }, true)
+        })
     }
 }
