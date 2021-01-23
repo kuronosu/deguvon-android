@@ -30,14 +30,14 @@ class SearchFragment : Fragment(), SearchAnimeListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        binding.rvSearchResults.addItemDecoration(
-            GridMarginItemDecorationLayout(
-                resources.getDimension(R.dimen.home_rv_padding).toInt(),
-                3
-            )
-        )
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         viewModel.setUpContext(requireContext())
+        val columnSpace = resources.getDimension(R.dimen.home_rv_padding).toInt()
+        val columns = resources.getInteger(R.integer.search_columns)
+        binding.rvSearchResults.layoutManager = GridLayoutManager(binding.root.context, columns)
+        binding.rvSearchResults.addItemDecoration(
+            GridMarginItemDecorationLayout(columnSpace, columns)
+        )
         searchAdapter = SearchAnimeAdapter(this)
         binding.rvSearchResults.apply {
             adapter = searchAdapter

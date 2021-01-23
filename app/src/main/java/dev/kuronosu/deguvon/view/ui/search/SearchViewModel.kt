@@ -5,9 +5,9 @@ import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import dev.kuronosu.deguvon.datasource.AnimeRepository
 import dev.kuronosu.deguvon.datasource.DataSourceCallback
 import dev.kuronosu.deguvon.datasource.DataSourceType
+import dev.kuronosu.deguvon.datasource.Repository
 import dev.kuronosu.deguvon.model.Anime
 
 class SearchViewModel : ViewModel() {
@@ -17,7 +17,7 @@ class SearchViewModel : ViewModel() {
     private val _animes = MutableLiveData<List<Anime>>()
     val animes: LiveData<List<Anime>> = _animes
 
-    private lateinit var repository: AnimeRepository
+    private lateinit var repository: Repository
     private lateinit var context: Context
     private var totalAnime: Int = 0
     private var isLoading = false
@@ -49,7 +49,7 @@ class SearchViewModel : ViewModel() {
 
     fun setUpContext(context: Context) {
         this.context = context
-        repository = AnimeRepository(context)
+        repository = Repository(context)
         totalAnime = repository.getAnimeCount()
     }
 }

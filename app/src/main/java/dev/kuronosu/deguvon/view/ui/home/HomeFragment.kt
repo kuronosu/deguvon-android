@@ -18,7 +18,7 @@ import dev.kuronosu.deguvon.view.adapter.LatestEpisodesListener
 class HomeFragment : Fragment(), LatestEpisodesListener {
     private var _binding: FragmentHomeBinding? = null
     private lateinit var latestEpisodesAdapter: LatestEpisodesAdapter
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var viewmodel: HomeViewModel
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -32,20 +32,20 @@ class HomeFragment : Fragment(), LatestEpisodesListener {
                 resources.getDimension(R.dimen.home_rv_padding).toInt()
             )
         )
-        val view = binding.root
-        viewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        viewmodel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        viewmodel.setUpContext(requireContext())
         latestEpisodesAdapter = LatestEpisodesAdapter(this)
         binding.rvLatestEpisodes.apply {
-            layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
             adapter = latestEpisodesAdapter
         }
         observeViewModel()
-        return view
+        return binding.root
     }
 
     private fun observeViewModel() {
-        viewModel.latestEpisodes.observe(viewLifecycleOwner, { latestEpisodes ->
+        viewmodel.latestEpisodes.observe(viewLifecycleOwner, { latestEpisodes ->
             latestEpisodesAdapter.updateData(latestEpisodes)
             binding.rvLatestEpisodes.visibility = View.VISIBLE
             binding.shimmerPlaceholderHomeLatestEpisodes.visibility = View.GONE
@@ -59,7 +59,7 @@ class HomeFragment : Fragment(), LatestEpisodesListener {
 
     override fun onStart() {
         super.onStart()
-        viewModel.refresh(requireContext())
+        viewmodel.refresh()
     }
 
     override fun onEpisodeClicked(episode: LatestEpisode, position: Int) {
