@@ -19,7 +19,7 @@ class AnimeRoomModelMapper(
         nextEpisodeDate = data.nextEpisodeDate,
         url = data.url,
         state = GenericRoomModelMapper().map(states.find { it.id == data.state }!!),
-        type = GenericRoomModelMapper().map(types.find { it.id == data.state }!!),
+        type = GenericRoomModelMapper().map(types.find { it.id == data.type }!!),
         genres = GenericListRoomModelMapper().map(genres.filter { it.id in data.genres }),
         otherNames = data.otherNames,
         synopsis = data.synopsis,
@@ -40,7 +40,10 @@ class AnimeRoomModelListMapper(
     override fun map(data: List<AnimeRoomModel>): List<Anime> {
         val animeRoomMapper = AnimeRoomModelMapper(states, types, genres)
         val list = ArrayList<Anime>()
-        data.forEach { list.add(animeRoomMapper.map(it)) }
+        data.forEach {
+            val tmp = animeRoomMapper.map(it)
+            list.add(tmp)
+        }
         return list
     }
 }
