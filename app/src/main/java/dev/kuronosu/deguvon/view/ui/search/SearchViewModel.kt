@@ -27,6 +27,8 @@ class SearchViewModel : ViewModel() {
             searchString = search
             animeList.clear()
             isLoading = false
+            if (totalAnime == 0)
+                _animes.postValue(animeList)
         }
         if (!isLoading && animeList.size < totalAnime) {
             isLoading = true
