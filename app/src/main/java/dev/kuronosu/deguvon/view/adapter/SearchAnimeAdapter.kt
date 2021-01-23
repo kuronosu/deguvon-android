@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.facebook.shimmer.Shimmer
@@ -44,7 +43,8 @@ class SearchAnimeAdapter(private val listener: SearchAnimeListener) :
                     .build()
             )
         }
-        holder.tvSearchAnime.text = anime.name
+        holder.tvSearchAnimeName.text = anime.name
+        holder.tvSearchAnimeType.text = anime.type.name
         holder.ivSearchAnime.load("https://kuronosu.dev" + animes[position].cover) {
             crossfade(true)
             placeholder(shimmerDrawable)
@@ -64,6 +64,7 @@ class SearchAnimeAdapter(private val listener: SearchAnimeListener) :
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivSearchAnime: ImageView = itemView.findViewById(R.id.search_anime_image)
-        val tvSearchAnime: TextView = itemView.findViewById(R.id.search_anime_name)
+        val tvSearchAnimeName: TextView = itemView.findViewById(R.id.search_anime_name)
+        val tvSearchAnimeType: TextView = itemView.findViewById(R.id.search_anime_type)
     }
 }
