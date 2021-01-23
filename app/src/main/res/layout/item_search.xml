@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="@drawable/ripple_anime_search_item">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/search_anime_image_container"
+        android:layout_width="match_parent"
+        android:layout_height="155dp"
+        app:cardCornerRadius="@dimen/search_item_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/search_anime_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_anime_search_image"
+            android:contentDescription="@string/anime_image"
+            android:scaleType="centerCrop"
+            app:layout_constraintCircleRadius="@dimen/anime_cover_height"
+            tools:src="@drawable/ic_launcher_foreground" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/search_anime_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:lines="2"
+        android:paddingTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_anime_image_container"
+        tools:text="Anime name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

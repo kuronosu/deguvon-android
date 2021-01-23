@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dev.kuronosu.deguvon.R
 import dev.kuronosu.deguvon.databinding.FragmentHomeBinding
 import dev.kuronosu.deguvon.model.LatestEpisode
-import dev.kuronosu.deguvon.utils.MarginItemDecorationHorizontalLayout
+import dev.kuronosu.deguvon.utils.HorizontalMarginItemDecorationLayout
 import dev.kuronosu.deguvon.view.adapter.LatestEpisodesAdapter
 import dev.kuronosu.deguvon.view.adapter.LatestEpisodesListener
 
@@ -28,7 +28,7 @@ class HomeFragment : Fragment(), LatestEpisodesListener {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.rvLatestEpisodes.addItemDecoration(
-            MarginItemDecorationHorizontalLayout(
+            HorizontalMarginItemDecorationLayout(
                 resources.getDimension(R.dimen.home_rv_padding).toInt()
             )
         )

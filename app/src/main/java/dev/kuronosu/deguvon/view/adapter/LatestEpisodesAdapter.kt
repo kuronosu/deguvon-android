@@ -13,7 +13,7 @@ import com.facebook.shimmer.ShimmerDrawable
 import dev.kuronosu.deguvon.R
 import dev.kuronosu.deguvon.model.LatestEpisode
 
-class LatestEpisodesAdapter(val latestEpisodesListener: LatestEpisodesListener) :
+class LatestEpisodesAdapter(private val latestEpisodesListener: LatestEpisodesListener) :
     RecyclerView.Adapter<LatestEpisodesAdapter.ViewHolder>() {
 
     var latestEpisodes = ArrayList<LatestEpisode>()
