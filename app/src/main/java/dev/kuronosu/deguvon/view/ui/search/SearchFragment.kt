@@ -1,9 +1,10 @@
 package dev.kuronosu.deguvon.view.ui.search
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,18 +18,39 @@ import dev.kuronosu.deguvon.view.adapter.SearchAnimeListener
 
 
 class SearchFragment : Fragment(), SearchAnimeListener {
-
     private lateinit var viewModel: SearchViewModel
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
     private lateinit var searchAdapter: SearchAnimeAdapter
 
+    //Search
+    private var searchView: SearchView? = null
+    private var queryTextListener: SearchView.OnQueryTextListener? =
+        object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.searchAnimes(newText!!)
+                return true
+            }
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.searchAnimes(query!!)
+                return true
+            }
+        }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         viewModel.setUpContext(requireContext())
@@ -49,6 +71,31 @@ class SearchFragment : Fragment(), SearchAnimeListener {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.searchAnimes()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.search_menu, menu)
+        val searchManager =
+            requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView = menu.findItem(R.id.search).actionView as SearchView
+        searchView?.apply {
+            setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
+            setOnQueryTextListener(queryTextListener)
+        }
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        searchView?.setOnQueryTextListener(queryTextListener)
+        return when (item.itemId) {
+            R.id.search -> false
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun initScrollListener() {
         binding.rvSearchResults.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(
@@ -58,15 +105,10 @@ class SearchFragment : Fragment(), SearchAnimeListener {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager = binding.rvSearchResults.layoutManager as GridLayoutManager
                 if (layoutManager.childCount + layoutManager.findLastVisibleItemPosition() >= layoutManager.itemCount) {
-                    viewModel.loadAnimes()
+                    viewModel.searchAnimes()
                 }
             }
         })
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.loadAnimes()
     }
 
     override fun onAnimeClicked(episode: Anime, position: Int) {

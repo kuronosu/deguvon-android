@@ -21,6 +21,9 @@ interface AnimeDAO {
     @Query("select * FROM animes ORDER BY name LIMIT :limit OFFSET :offset ")
     fun getAnimesByPages(limit: Int, offset: Int): List<AnimeRoomModel>
 
+    @Query("select * FROM animes WHERE (name LIKE '%' || :search || '%' OR other_names LIKE '%' || :search || '%') ORDER BY name LIMIT :limit OFFSET :offset ")
+    fun searchAnimesByPages(search: String, limit: Int, offset: Int): List<AnimeRoomModel>
+
     @Query("select * FROM animes where flvid LIKE :aid")
     fun getAnimeByID(aid: String): AnimeRoomModel
 
@@ -29,6 +32,9 @@ interface AnimeDAO {
 
     @Query("SELECT COUNT(flvid) FROM animes")
     fun getAnimeCount(): Int
+
+    @Query("SELECT COUNT(flvid) FROM animes WHERE name LIKE '%' || :search || '%' OR other_names LIKE '%' || :search || '%' ")
+    fun getAnimeSearchCount(search: String): Int
 
     // Genres
     @Insert(onConflict = OnConflictStrategy.REPLACE)

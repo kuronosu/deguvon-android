@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Deguvon</string>
     <string name="title_home">Inicio</string>
-    <string name="title_search">Buscar</string>
+    <string name="search_hint">Buscar</string>
     <string name="title_dashboard">Mas</string>
     <string name="anime_image">Anime image</string>
     <string name="anime_cover_shimmer">Anime cover shimmer</string>

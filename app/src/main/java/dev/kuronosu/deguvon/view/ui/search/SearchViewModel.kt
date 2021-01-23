@@ -1,12 +1,9 @@
 package dev.kuronosu.deguvon.view.ui.search
 
 import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import dev.kuronosu.deguvon.datasource.DataSourceCallback
-import dev.kuronosu.deguvon.datasource.DataSourceType
 import dev.kuronosu.deguvon.datasource.Repository
 import dev.kuronosu.deguvon.model.Anime
 
@@ -21,29 +18,26 @@ class SearchViewModel : ViewModel() {
     private lateinit var context: Context
     private var totalAnime: Int = 0
     private var isLoading = false
+    private var searchString = ""
 
-    private val callback = object : DataSourceCallback<List<Anime>> {
-        override fun onError(error: String) {
-            Toast.makeText(
-                context,
-                "Error al cargar animes",
-                Toast.LENGTH_SHORT
-            ).show()
+    fun searchAnimes(search: String = searchString) {
+        if (searchString != search) {
+            totalAnime = repository.getAnimeSearchCount(search)
+            page = 0
+            searchString = search
+            animeList.clear()
             isLoading = false
         }
-
-        override fun onSuccess(data: List<Anime>, sourceType: DataSourceType) {
-            page++
-            isLoading = false
-            animeList.addAll(data)
-            _animes.postValue(animeList)
-        }
-    }
-
-    fun loadAnimes() {
         if (!isLoading && animeList.size < totalAnime) {
             isLoading = true
-            repository.getPagedAnimes(pageCount, page, callback)
+            repository.searchAnime(search, pageCount, page) {
+                if (isLoading) {
+                    page++
+                    isLoading = false
+                    animeList.addAll(it)
+                    _animes.postValue(animeList)
+                }
+            }
         }
     }
 

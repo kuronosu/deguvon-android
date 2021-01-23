@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/navigation_search"
         android:name="dev.kuronosu.deguvon.view.ui.search.SearchFragment"
-        android:label="@string/title_search"
+        android:label="@string/search_hint"
         tools:layout="@layout/fragment_search" />
 
     <fragment
