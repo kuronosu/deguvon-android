@@ -9,6 +9,7 @@ import dev.kuronosu.deguvon.datasource.localstorage.model.GenreRoomModel
 import dev.kuronosu.deguvon.datasource.localstorage.model.StateRoomModel
 import dev.kuronosu.deguvon.datasource.localstorage.model.TypeRoomModel
 
+
 @Dao
 interface AnimeDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -17,14 +18,17 @@ interface AnimeDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAnimes(animes: List<AnimeRoomModel>)
 
-    @Query("select * FROM animes")
-    fun getAnimes(): List<AnimeRoomModel>
+    @Query("select * FROM animes ORDER BY name LIMIT :limit OFFSET :offset ")
+    fun getAnimesByPages(limit: Int, offset: Int): List<AnimeRoomModel>
 
     @Query("select * FROM animes where flvid LIKE :aid")
     fun getAnimeByID(aid: String): AnimeRoomModel
 
     @Query("DELETE FROM animes")
     fun clearAnimes()
+
+    @Query("SELECT COUNT(flvid) FROM animes")
+    fun getAnimeCount(): Int
 
     // Genres
     @Insert(onConflict = OnConflictStrategy.REPLACE)

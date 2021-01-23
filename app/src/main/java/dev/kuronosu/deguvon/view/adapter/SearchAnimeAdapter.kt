@@ -6,12 +6,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import dev.kuronosu.deguvon.R
 import dev.kuronosu.deguvon.model.Anime
+
 
 class SearchAnimeAdapter(private val listener: SearchAnimeListener) :
     RecyclerView.Adapter<SearchAnimeAdapter.ViewHolder>() {
