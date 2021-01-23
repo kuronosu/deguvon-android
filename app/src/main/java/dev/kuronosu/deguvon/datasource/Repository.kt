@@ -155,7 +155,9 @@ class Repository(private val applicationContext: Context) {
             db.animeDAO().getTypes(),
             db.animeDAO().getGenres()
         )
-        return if (search.isEmpty()) mapper.map(db.animeDAO().getAnimesByPages(limit, 0))
-        else mapper.map(db.animeDAO().searchAnimesByPages(search, limit, page * limit))
+        return mapper.map(
+            if (search.isEmpty()) db.animeDAO().getAnimesByPages(limit, page * limit)
+            else db.animeDAO().searchAnimesByPages(search, limit, page * limit)
+        )
     }
 }

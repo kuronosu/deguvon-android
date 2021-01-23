@@ -73,7 +73,7 @@ class SearchFragment : Fragment(), SearchAnimeListener {
 
     override fun onStart() {
         super.onStart()
-        viewModel.searchAnimes()
+        viewModel.loadMore()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -105,7 +105,7 @@ class SearchFragment : Fragment(), SearchAnimeListener {
                 super.onScrolled(recyclerView, dx, dy)
                 val layoutManager = binding.rvSearchResults.layoutManager as GridLayoutManager
                 if (layoutManager.childCount + layoutManager.findLastVisibleItemPosition() >= layoutManager.itemCount) {
-                    viewModel.searchAnimes()
+                    viewModel.loadMore()
                 }
             }
         })

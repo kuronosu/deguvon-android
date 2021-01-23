@@ -20,7 +20,7 @@ class SearchViewModel : ViewModel() {
     private var isLoading = false
     private var searchString = ""
 
-    fun searchAnimes(search: String = searchString) {
+    fun searchAnimes(search: String) {
         if (searchString != search) {
             totalAnime = repository.getAnimeSearchCount(search)
             page = 0
@@ -29,12 +29,17 @@ class SearchViewModel : ViewModel() {
             isLoading = false
             if (totalAnime == 0)
                 _animes.postValue(animeList)
+            else
+                loadMore()
         }
+    }
+
+    fun loadMore() {
         if (!isLoading && animeList.size < totalAnime) {
             isLoading = true
-            repository.searchAnime(search, pageCount, page) {
+            repository.searchAnime(searchString, pageCount, page) {
                 if (isLoading) {
-                    page++
+                    page += 1
                     isLoading = false
                     animeList.addAll(it)
                     _animes.postValue(animeList)
