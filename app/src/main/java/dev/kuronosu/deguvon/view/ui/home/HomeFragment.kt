@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.kuronosu.deguvon.R
 import dev.kuronosu.deguvon.databinding.FragmentHomeBinding
@@ -18,7 +19,7 @@ import dev.kuronosu.deguvon.view.adapter.LatestEpisodesListener
 class HomeFragment : Fragment(), LatestEpisodesListener {
     private var _binding: FragmentHomeBinding? = null
     private lateinit var latestEpisodesAdapter: LatestEpisodesAdapter
-    private lateinit var viewmodel: HomeViewModel
+    private val viewmodel: HomeViewModel by navGraphViewModels(R.id.mobile_navigation)
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -32,7 +33,7 @@ class HomeFragment : Fragment(), LatestEpisodesListener {
                 resources.getDimension(R.dimen.home_rv_padding).toInt()
             )
         )
-        viewmodel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        //viewmodel = ViewModelProvider(this).get(HomeViewModel::class.java)
         viewmodel.setUpContext(requireContext())
         latestEpisodesAdapter = LatestEpisodesAdapter(this)
         binding.rvLatestEpisodes.apply {

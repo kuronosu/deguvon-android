@@ -34,8 +34,18 @@ class SearchViewModel : ViewModel() {
         }
     }
 
+    fun initialLoad() {
+        if (animeList.isEmpty())
+            _loadMore()
+    }
+
     fun loadMore() {
-        if (!isLoading && animeList.size < totalAnime) {
+        if (animeList.size < totalAnime)
+            _loadMore()
+    }
+
+    private fun _loadMore() {
+        if (!isLoading) {
             isLoading = true
             repository.searchAnime(searchString, pageCount, page) {
                 if (isLoading) {
@@ -52,5 +62,6 @@ class SearchViewModel : ViewModel() {
         this.context = context
         repository = Repository(context)
         totalAnime = repository.getAnimeCount()
+        isLoading = false;
     }
 }

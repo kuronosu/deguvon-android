@@ -1,6 +1,7 @@
 package dev.kuronosu.deguvon.view.ui.home
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -40,8 +41,11 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    fun refresh() {
-        repository.latestEpisodes(refreshLatestCallback)
+    fun refresh(force: Boolean = false) {
+        val comp = _latestEpisodes.value?.isEmpty()
+        Log.e("KURONOSU", (force || comp == null || comp).toString())
+        if (force || comp == null || comp)
+            repository.latestEpisodes(refreshLatestCallback)
     }
 
     fun setUpContext(context: Context) {

@@ -7,6 +7,7 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.kuronosu.deguvon.R
@@ -15,10 +16,11 @@ import dev.kuronosu.deguvon.model.Anime
 import dev.kuronosu.deguvon.utils.GridMarginItemDecorationLayout
 import dev.kuronosu.deguvon.view.adapter.SearchAnimeAdapter
 import dev.kuronosu.deguvon.view.adapter.SearchAnimeListener
+import dev.kuronosu.deguvon.view.ui.home.HomeViewModel
 
 
 class SearchFragment : Fragment(), SearchAnimeListener {
-    private lateinit var viewModel: SearchViewModel
+    private val viewModel: SearchViewModel by navGraphViewModels(R.id.mobile_navigation)
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -52,7 +54,7 @@ class SearchFragment : Fragment(), SearchAnimeListener {
     ): View {
         setHasOptionsMenu(true)
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+        //viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         viewModel.setUpContext(requireContext())
         val columnSpace = resources.getDimension(R.dimen.home_rv_padding).toInt()
         val columns = resources.getInteger(R.integer.search_columns)
@@ -73,7 +75,7 @@ class SearchFragment : Fragment(), SearchAnimeListener {
 
     override fun onStart() {
         super.onStart()
-        viewModel.loadMore()
+        viewModel.initialLoad()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
