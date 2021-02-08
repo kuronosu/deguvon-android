@@ -1,6 +1,6 @@
 package dev.kuronosu.deguvon.datasource.network.mapper
 
-import coil.map.Mapper
+import dev.kuronosu.deguvon.datasource.Mapper
 import dev.kuronosu.deguvon.datasource.network.model.GenericNetworkModel
 import dev.kuronosu.deguvon.model.Generic
 

@@ -5,13 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.facebook.shimmer.Shimmer
-import com.facebook.shimmer.ShimmerDrawable
 import dev.kuronosu.deguvon.R
 import dev.kuronosu.deguvon.model.Anime
+import dev.kuronosu.deguvon.utils.loadWithShimmerPlaceholder
 
 
 class SearchAnimeAdapter(private val listener: SearchAnimeListener) :
@@ -30,25 +27,9 @@ class SearchAnimeAdapter(private val listener: SearchAnimeListener) :
         /*if (anime.name.isEmpty()) holder.tvSearchAnime.visibility =
             View.INVISIBLE
         else holder.tvSearchAnime.text = anime.name*/
-        val color = ContextCompat.getColor(
-            holder.ivSearchAnime.context,
-            R.color.white
-        )
-        val shimmerDrawable = ShimmerDrawable().apply {
-            setShimmer(
-                Shimmer.ColorHighlightBuilder()
-                    .setHighlightColor(color)
-                    .setBaseAlpha(0.9f)
-                    .setBaseColor(color)
-                    .build()
-            )
-        }
         holder.tvSearchAnimeName.text = anime.name
         holder.tvSearchAnimeType.text = anime.type.name
-        holder.ivSearchAnime.load("https://kuronosu.dev" + animes[position].cover) {
-            crossfade(true)
-            placeholder(shimmerDrawable)
-        }
+        holder.ivSearchAnime.loadWithShimmerPlaceholder("https://kuronosu.dev" + animes[position].cover)
         holder.itemView.setOnClickListener {
             listener.onAnimeClicked(anime, position)
         }

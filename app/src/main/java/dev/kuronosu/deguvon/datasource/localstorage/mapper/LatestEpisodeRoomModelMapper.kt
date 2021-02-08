@@ -1,6 +1,6 @@
 package dev.kuronosu.deguvon.datasource.localstorage.mapper
 
-import coil.map.Mapper
+import dev.kuronosu.deguvon.datasource.Mapper
 import dev.kuronosu.deguvon.datasource.localstorage.model.LatestEpisodeAnimeDataRoomModel
 import dev.kuronosu.deguvon.datasource.localstorage.model.LatestEpisodeRoomModel
 import dev.kuronosu.deguvon.model.Generic

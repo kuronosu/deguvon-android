@@ -5,13 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
-import com.facebook.shimmer.Shimmer
-import com.facebook.shimmer.ShimmerDrawable
 import dev.kuronosu.deguvon.R
 import dev.kuronosu.deguvon.model.LatestEpisode
+import dev.kuronosu.deguvon.utils.loadWithShimmerPlaceholder
 
 class LatestEpisodesAdapter(private val latestEpisodesListener: LatestEpisodesListener) :
     RecyclerView.Adapter<LatestEpisodesAdapter.ViewHolder>() {
@@ -31,29 +28,10 @@ class LatestEpisodesAdapter(private val latestEpisodesListener: LatestEpisodesLi
         else holder.tvLatestEpisodeAnimeName.text = latestEpisode.anime.name
         if (latestEpisode.capi.isEmpty()) holder.tvLatestEpisodeCapi.visibility = View.INVISIBLE
         else holder.tvLatestEpisodeCapi.text = latestEpisode.capi.replace("Episodio ", "")
-        val color = ContextCompat.getColor(
-            holder.ivLatestEpisodeImage.context,
-            R.color.white
-        )
-        val shimmerDrawable = ShimmerDrawable().apply {
-            setShimmer(
-                Shimmer.ColorHighlightBuilder()
-                    .setHighlightColor(color)
-                    .setBaseAlpha(0.9f)
-                    .setBaseColor(color)
-                    .build()
-            )
-        }
 
-        holder.ivLatestEpisodeImage.load(
-            "https://kuronosu.dev" + latestEpisodes[position].image.replace(
-                "thumbs",
-                "covers"
-            )
-        ) {
-            crossfade(true)
-            placeholder(shimmerDrawable)
-        }
+        val url = "https://kuronosu.dev" +
+                latestEpisodes[position].image.replace("thumbs", "covers")
+        holder.ivLatestEpisodeImage.loadWithShimmerPlaceholder(url)
         holder.itemView.setOnClickListener {
             latestEpisodesListener.onEpisodeClicked(latestEpisode, position)
         }

@@ -1,4 +1,4 @@
-package dev.kuronosu.deguvon
+package dev.kuronosu.deguvon.view.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import dev.kuronosu.deguvon.R
 import dev.kuronosu.deguvon.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

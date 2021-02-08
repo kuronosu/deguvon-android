@@ -1,6 +1,6 @@
 package dev.kuronosu.deguvon.datasource.mapper
 
-import coil.map.Mapper
+import dev.kuronosu.deguvon.datasource.Mapper
 import dev.kuronosu.deguvon.datasource.localstorage.model.AnimeRelationRoomModel
 import dev.kuronosu.deguvon.datasource.network.model.RelationNetworkModel
 
