@@ -113,7 +113,7 @@ class SearchFragment : Fragment(), SearchAnimeListener {
         })
     }
 
-    override fun onAnimeClicked(episode: Anime, position: Int) {
+    override fun onAnimeClicked(anime: Anime, position: Int) {
 
     }
 }
