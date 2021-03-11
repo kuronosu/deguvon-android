@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.kuronosu.deguvon.R
-import dev.kuronosu.deguvon.model.Anime
+import dev.kuronosu.deguvon.datasource.model.Anime
 import dev.kuronosu.deguvon.utils.loadWithShimmerPlaceholder
 
 

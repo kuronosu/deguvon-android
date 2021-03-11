@@ -5,7 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dev.kuronosu.deguvon.datasource.Repository
-import dev.kuronosu.deguvon.model.Anime
+import dev.kuronosu.deguvon.datasource.getRepository
+import dev.kuronosu.deguvon.datasource.model.Anime
 
 class SearchViewModel : ViewModel() {
     private val pageCount = 30
@@ -60,7 +61,7 @@ class SearchViewModel : ViewModel() {
 
     fun setUpContext(context: Context) {
         this.context = context
-        repository = Repository(context)
+        repository = getRepository(context)
         totalAnime = repository.getAnimeCount()
         isLoading = false;
     }

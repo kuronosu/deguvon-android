@@ -1,4 +1,4 @@
-package dev.kuronosu.deguvon.model
+package dev.kuronosu.deguvon.datasource.model
 
 data class Episode(
     val number: Float,

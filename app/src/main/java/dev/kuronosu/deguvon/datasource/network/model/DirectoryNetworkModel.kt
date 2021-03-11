@@ -8,3 +8,5 @@ data class DirectoryNetworkModel(
     @SerializedName("genres") val genres: List<GenericNetworkModel>,
     @SerializedName("animes") val animes: List<AnimeNetworkModel>
 )
+
+fun DirectoryNetworkModel.asInterfaceModel() = animes.asInterfaceModel(states, types, genres)

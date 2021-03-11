@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.kuronosu.deguvon.R
 import dev.kuronosu.deguvon.databinding.FragmentHomeBinding
-import dev.kuronosu.deguvon.model.LatestEpisode
+import dev.kuronosu.deguvon.datasource.model.LatestEpisode
 import dev.kuronosu.deguvon.utils.HorizontalMarginItemDecorationLayout
 import dev.kuronosu.deguvon.view.adapter.LatestEpisodesAdapter
 import dev.kuronosu.deguvon.view.adapter.LatestEpisodesListener

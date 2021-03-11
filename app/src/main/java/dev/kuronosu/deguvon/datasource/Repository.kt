@@ -1,17 +1,16 @@
 package dev.kuronosu.deguvon.datasource
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
-import androidx.room.Room
 import dev.kuronosu.deguvon.datasource.localstorage.AppDatabase
 import dev.kuronosu.deguvon.datasource.localstorage.dao.insertDirectory
-import dev.kuronosu.deguvon.datasource.localstorage.mapper.*
-import dev.kuronosu.deguvon.datasource.mapper.AnimeNetworkListToAnimeRoomListMapper
+import dev.kuronosu.deguvon.datasource.localstorage.getDatabase
+import dev.kuronosu.deguvon.datasource.localstorage.model.asInterfaceModel
+import dev.kuronosu.deguvon.datasource.model.Anime
+import dev.kuronosu.deguvon.datasource.model.LatestEpisode
 import dev.kuronosu.deguvon.datasource.network.ApiAdapter
-import dev.kuronosu.deguvon.datasource.network.mapper.GenericNetworkModelListMapper
-import dev.kuronosu.deguvon.datasource.network.mapper.LatestEpisodeNetworkModelListMapper
-import dev.kuronosu.deguvon.model.Anime
-import dev.kuronosu.deguvon.model.LatestEpisode
+import dev.kuronosu.deguvon.datasource.network.model.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -19,15 +18,16 @@ import kotlinx.coroutines.launch
 
 class Repository(private val applicationContext: Context) {
     private val webservice = ApiAdapter.API_SERVICE
-    private val db: AppDatabase = Room.databaseBuilder(
-        applicationContext,
-        AppDatabase::class.java, "deguvon"
-    ).allowMainThreadQueries().build()
+    private val db: AppDatabase = getDatabase(applicationContext, true)
+
+    private var dbStates = db.animeDAO().getStates()
+    private var dbTypes = db.animeDAO().getTypes()
+    private var dbGenres = db.animeDAO().getGenres()
 
     fun latestEpisodes(callback: DataSourceCallback<List<LatestEpisode>>) {
-        val dbItems = db.latestEpisodesDAO().getAll()
+        val dbLatest = db.latestEpisodesDAO().getAll()
         callback.onSuccess(
-            LatestEpisodeRoomModelListMapper().map(dbItems),
+            dbLatest.asInterfaceModel(),
             DataSourceType.Local
         )
         MainScope().launch {
@@ -35,21 +35,17 @@ class Repository(private val applicationContext: Context) {
                 val response = webservice.getLatestEpisodes()
                 if (response.isSuccessful && response.body() != null) {
                     val items = response.body()!!
-                    val list = LatestEpisodeNetworkModelListMapper().map(items)
                     db.latestEpisodesDAO().let {
                         it.clear()
-                        it.insertAllLatest(
-                            LatestEpisodeToLatestEpisodeRoomModelListMapper().map(
-                                list
-                            )
-                        )
+                        it.insertAllLatest(items.asRoomModel())
                     }
-                    if (dbItems.isEmpty() || dbItems[0].url != list[0].url) {
+                    if (dbLatest.isEmpty() || dbLatest[0].url != items[0].url || getAnimeCount() == 0) {
                         Toast.makeText(
                             applicationContext,
                             "Actualizando directorio",
                             Toast.LENGTH_SHORT
                         ).show()
+                        Log.e("AD", dbGenres.size.toString())
                         CoroutineScope(Dispatchers.IO).launch {
                             updateDirectory(
                                 onSuccess = {
@@ -71,14 +67,14 @@ class Repository(private val applicationContext: Context) {
                                 })
                         }
                     }
-                    callback.onSuccess(list, DataSourceType.Remote)
+                    callback.onSuccess(items.asInterfaceModel(), DataSourceType.Remote)
                 } else {
-                    if (dbItems.isEmpty()) {
+                    if (dbLatest.isEmpty()) {
                         callback.onError(response.message())
                     }
                 }
             } catch (e: Exception) {
-                if (dbItems.isEmpty()) {
+                if (dbLatest.isEmpty()) {
                     callback.onError(e.message!!)
                 }
             }
@@ -121,15 +117,13 @@ class Repository(private val applicationContext: Context) {
             val response = webservice.getDirectory()
             if (response.isSuccessful && response.body() != null) {
                 val networkDirectory = response.body()!!
-                val statesMapper = GenericListToStateRoomModelListMapper()
-                val typesMapper = GenericListToTypeRoomModelListMapper()
-                val genresMapper = GenericListToGenreRoomModelListMapper()
                 db.animeDAO().insertDirectory(
-                    statesMapper.map(GenericNetworkModelListMapper().map(networkDirectory.states)),
-                    typesMapper.map(GenericNetworkModelListMapper().map(networkDirectory.types)),
-                    genresMapper.map(GenericNetworkModelListMapper().map(networkDirectory.genres)),
-                    AnimeNetworkListToAnimeRoomListMapper().map(networkDirectory.animes)
+                    networkDirectory.states.asStateRoomModel(),
+                    networkDirectory.types.asTypeRoomModel(),
+                    networkDirectory.genres.asGenreRoomModel(),
+                    networkDirectory.animes.asRoomModel()
                 )
+                updateLocalVariables()
                 onSuccess()
             } else {
                 onError("Unsuccessful answer")
@@ -137,27 +131,33 @@ class Repository(private val applicationContext: Context) {
         } catch (e: Exception) {
             onError(e.message!!)
         }
-
     }
 
-    private fun getDirectoryFromDB(limit: Int, page: Int): List<Anime> {
-        val mapper = AnimeRoomModelListMapper(
-            db.animeDAO().getStates(),
-            db.animeDAO().getTypes(),
-            db.animeDAO().getGenres()
-        )
-        return mapper.map(db.animeDAO().getAnimesByPages(limit, page * limit))
-    }
+    private fun getDirectoryFromDB(limit: Int, page: Int) =
+        db.animeDAO().getAnimesByPages(limit, page * limit)
+            .asInterfaceModel(dbStates, dbTypes, dbGenres)
+
 
     private fun searchAnimeFromDB(search: String, limit: Int, page: Int): List<Anime> {
-        val mapper = AnimeRoomModelListMapper(
-            db.animeDAO().getStates(),
-            db.animeDAO().getTypes(),
-            db.animeDAO().getGenres()
-        )
-        return mapper.map(
-            if (search.isEmpty()) db.animeDAO().getAnimesByPages(limit, page * limit)
-            else db.animeDAO().searchAnimesByPages(search, limit, page * limit)
-        )
+        val list = if (search.isEmpty()) db.animeDAO().getAnimesByPages(limit, page * limit)
+        else db.animeDAO().searchAnimesByPages(search, limit, page * limit)
+        return list.asInterfaceModel(dbStates, dbTypes, dbGenres)
     }
+
+    private fun updateLocalVariables() {
+        dbStates = db.animeDAO().getStates()
+        dbTypes = db.animeDAO().getTypes()
+        dbGenres = db.animeDAO().getGenres()
+    }
+}
+
+private lateinit var INSTANCE: Repository
+
+fun getRepository(context: Context): Repository {
+    synchronized(Repository::class.java) {
+        if (!::INSTANCE.isInitialized) {
+            INSTANCE = Repository(context)
+        }
+    }
+    return INSTANCE
 }

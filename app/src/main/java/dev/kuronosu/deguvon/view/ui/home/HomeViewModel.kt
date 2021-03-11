@@ -9,8 +9,9 @@ import androidx.lifecycle.ViewModel
 import dev.kuronosu.deguvon.datasource.DataSourceCallback
 import dev.kuronosu.deguvon.datasource.DataSourceType
 import dev.kuronosu.deguvon.datasource.Repository
-import dev.kuronosu.deguvon.model.Generic
-import dev.kuronosu.deguvon.model.LatestEpisode
+import dev.kuronosu.deguvon.datasource.getRepository
+import dev.kuronosu.deguvon.datasource.model.Generic
+import dev.kuronosu.deguvon.datasource.model.LatestEpisode
 
 class HomeViewModel : ViewModel() {
 
@@ -50,6 +51,6 @@ class HomeViewModel : ViewModel() {
 
     fun setUpContext(context: Context) {
         this.context = context
-        repository = Repository(context)
+        repository = getRepository(context)
     }
 }

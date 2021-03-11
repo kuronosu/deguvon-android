@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.kuronosu.deguvon.R
-import dev.kuronosu.deguvon.model.LatestEpisode
+import dev.kuronosu.deguvon.datasource.model.LatestEpisode
 import dev.kuronosu.deguvon.utils.loadWithShimmerPlaceholder
 
 class LatestEpisodesAdapter(private val latestEpisodesListener: LatestEpisodesListener) :

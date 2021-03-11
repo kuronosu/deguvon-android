@@ -6,17 +6,15 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.kuronosu.deguvon.R
 import dev.kuronosu.deguvon.databinding.FragmentSearchBinding
-import dev.kuronosu.deguvon.model.Anime
+import dev.kuronosu.deguvon.datasource.model.Anime
 import dev.kuronosu.deguvon.utils.GridMarginItemDecorationLayout
 import dev.kuronosu.deguvon.view.adapter.SearchAnimeAdapter
 import dev.kuronosu.deguvon.view.adapter.SearchAnimeListener
-import dev.kuronosu.deguvon.view.ui.home.HomeViewModel
 
 
 class SearchFragment : Fragment(), SearchAnimeListener {
