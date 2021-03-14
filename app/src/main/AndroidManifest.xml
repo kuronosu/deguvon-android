@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Deguvon">
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

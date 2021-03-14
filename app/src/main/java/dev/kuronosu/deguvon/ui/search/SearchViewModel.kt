@@ -1,4 +1,4 @@
-package dev.kuronosu.deguvon.view.ui.search
+package dev.kuronosu.deguvon.ui.search
 
 import android.content.Context
 import androidx.lifecycle.LiveData

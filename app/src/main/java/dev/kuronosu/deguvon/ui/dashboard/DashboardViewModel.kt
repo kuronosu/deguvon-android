@@ -1,4 +1,4 @@
-package dev.kuronosu.deguvon.view.ui.dashboard
+package dev.kuronosu.deguvon.ui.dashboard
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

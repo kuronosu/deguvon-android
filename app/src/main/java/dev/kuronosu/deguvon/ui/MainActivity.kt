@@ -1,4 +1,4 @@
-package dev.kuronosu.deguvon.view.activity
+package dev.kuronosu.deguvon.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

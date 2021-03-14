@@ -1,4 +1,4 @@
-package dev.kuronosu.deguvon.view.adapter
+package dev.kuronosu.deguvon.ui.home.view
 
 import android.view.LayoutInflater
 import android.view.View

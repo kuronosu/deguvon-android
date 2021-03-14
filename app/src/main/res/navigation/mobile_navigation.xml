@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="dev.kuronosu.deguvon.view.ui.home.HomeFragment"
+        android:name="dev.kuronosu.deguvon.ui.home.view.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="dev.kuronosu.deguvon.view.ui.search.SearchFragment"
+        android:name="dev.kuronosu.deguvon.ui.search.view.SearchFragment"
         android:label="@string/search_hint"
         tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="dev.kuronosu.deguvon.view.ui.dashboard.DashboardFragment"
+        android:name="dev.kuronosu.deguvon.ui.dashboard.view.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 </navigation>

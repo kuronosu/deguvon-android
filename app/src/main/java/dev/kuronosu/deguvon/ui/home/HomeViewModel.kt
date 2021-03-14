@@ -1,4 +1,4 @@
-package dev.kuronosu.deguvon.view.ui.home
+package dev.kuronosu.deguvon.ui.home
 
 import android.content.Context
 import android.util.Log
@@ -43,9 +43,9 @@ class HomeViewModel : ViewModel() {
     }
 
     fun refresh(force: Boolean = false) {
-        val comp = _latestEpisodes.value?.isEmpty()
-        Log.e("KURONOSU", (force || comp == null || comp).toString())
-        if (force || comp == null || comp)
+        val comp = _latestEpisodes.value?.isEmpty() ?: true
+        Log.e("KURONOSU", (force || comp).toString())
+        if (force || comp)
             repository.latestEpisodes(refreshLatestCallback)
     }
 

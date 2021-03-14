@@ -1,4 +1,4 @@
-package dev.kuronosu.deguvon.view.ui.home
+package dev.kuronosu.deguvon.ui.home.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,9 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dev.kuronosu.deguvon.R
 import dev.kuronosu.deguvon.databinding.FragmentHomeBinding
 import dev.kuronosu.deguvon.datasource.model.LatestEpisode
+import dev.kuronosu.deguvon.ui.home.HomeViewModel
 import dev.kuronosu.deguvon.utils.HorizontalMarginItemDecorationLayout
-import dev.kuronosu.deguvon.view.adapter.LatestEpisodesAdapter
-import dev.kuronosu.deguvon.view.adapter.LatestEpisodesListener
 
 
 class HomeFragment : Fragment(), LatestEpisodesListener {

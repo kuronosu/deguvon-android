@@ -1,4 +1,4 @@
-package dev.kuronosu.deguvon.view.adapter
+package dev.kuronosu.deguvon.ui.search.view
 
 import dev.kuronosu.deguvon.datasource.model.Anime
 

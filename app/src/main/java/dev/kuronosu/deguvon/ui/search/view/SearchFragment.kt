@@ -1,4 +1,4 @@
-package dev.kuronosu.deguvon.view.ui.search
+package dev.kuronosu.deguvon.ui.search.view
 
 import android.app.SearchManager
 import android.content.Context
@@ -12,9 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.kuronosu.deguvon.R
 import dev.kuronosu.deguvon.databinding.FragmentSearchBinding
 import dev.kuronosu.deguvon.datasource.model.Anime
+import dev.kuronosu.deguvon.ui.search.SearchViewModel
 import dev.kuronosu.deguvon.utils.GridMarginItemDecorationLayout
-import dev.kuronosu.deguvon.view.adapter.SearchAnimeAdapter
-import dev.kuronosu.deguvon.view.adapter.SearchAnimeListener
 
 
 class SearchFragment : Fragment(), SearchAnimeListener {

@@ -1,4 +1,4 @@
-package dev.kuronosu.deguvon.view.ui.dashboard
+package dev.kuronosu.deguvon.ui.dashboard.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import dev.kuronosu.deguvon.R
+import dev.kuronosu.deguvon.ui.dashboard.DashboardViewModel
 
 class DashboardFragment : Fragment() {
 
