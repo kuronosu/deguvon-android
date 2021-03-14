@@ -24,6 +24,7 @@
             tools:text="Title Bottom Sheet" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="@dimen/dimen_8"
             android:id="@+id/rv_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
