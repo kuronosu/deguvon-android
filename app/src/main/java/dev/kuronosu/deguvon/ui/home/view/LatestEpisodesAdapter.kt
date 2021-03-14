@@ -35,6 +35,10 @@ class LatestEpisodesAdapter(private val latestEpisodesListener: LatestEpisodesLi
         holder.itemView.setOnClickListener {
             latestEpisodesListener.onEpisodeClicked(latestEpisode, position)
         }
+        holder.itemView.setOnLongClickListener {
+            latestEpisodesListener.onEpisodeClickedLong(latestEpisode, position)
+            true
+        }
     }
 
     override fun getItemCount() = latestEpisodes.size

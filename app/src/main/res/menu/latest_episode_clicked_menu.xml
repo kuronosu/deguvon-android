@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/play"
+        android:icon="@drawable/ic_baseline_play_arrow_24"
+        android:title="@string/play" />
+    <item
+        android:id="@+id/download"
+        android:icon="@drawable/ic_baseline_arrow_downward_24"
+        android:title="@string/download" />
+
+    <item
+        android:id="@+id/anime_details"
+        android:icon="@drawable/ic_baseline_details_24"
+        android:title="@string/anime_details" />
+    <item
+        android:id="@+id/mark_as_seen"
+        android:icon="@drawable/ic_baseline_remove_red_eye_24"
+        android:title="@string/mark_as_seen" />
+</menu>

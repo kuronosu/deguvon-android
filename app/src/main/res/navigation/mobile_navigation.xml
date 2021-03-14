@@ -9,17 +9,30 @@
         android:id="@+id/navigation_home"
         android:name="dev.kuronosu.deguvon.ui.home.view.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_latest_episode_bottom_sheet"
+            app:destination="@id/navigation_bottom_sheet_menu" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_search"
         android:name="dev.kuronosu.deguvon.ui.search.view.SearchFragment"
         android:label="@string/search_hint"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_latest_episode_bottom_sheet"
+            app:destination="@id/navigation_bottom_sheet_menu" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="dev.kuronosu.deguvon.ui.dashboard.view.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
+    <dialog
+        android:id="@+id/navigation_bottom_sheet_menu"
+        android:name="dev.kuronosu.deguvon.utils.BottomSheetMenu"
+        android:label="LatestEpisodeMenuListDialogFragment"
+        tools:layout="@layout/fragment_bottom_sheet_menu_dialog" />
 </navigation>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,6 +12,7 @@ import dev.kuronosu.deguvon.R
 import dev.kuronosu.deguvon.databinding.FragmentHomeBinding
 import dev.kuronosu.deguvon.datasource.model.LatestEpisode
 import dev.kuronosu.deguvon.ui.home.HomeViewModel
+import dev.kuronosu.deguvon.utils.BottomSheetMenu
 import dev.kuronosu.deguvon.utils.HorizontalMarginItemDecorationLayout
 
 
@@ -62,6 +64,36 @@ class HomeFragment : Fragment(), LatestEpisodesListener {
     }
 
     override fun onEpisodeClicked(episode: LatestEpisode, position: Int) {
+    }
 
+    override fun onEpisodeClickedLong(episode: LatestEpisode, position: Int) {
+        BottomSheetMenu.newInstance(R.menu.latest_episode_clicked_menu) {
+            when (it.itemId) {
+                R.id.play -> Toast.makeText(context, "Próximamente (Play)", Toast.LENGTH_SHORT)
+                    .show()
+                R.id.download -> Toast.makeText(
+                    context,
+                    "Próximamente (Download)",
+                    Toast.LENGTH_SHORT
+                ).show()
+                R.id.anime_details -> Toast.makeText(
+                    context,
+                    "Próximamente (Anime details)",
+                    Toast.LENGTH_SHORT
+                ).show()
+                R.id.mark_as_seen -> Toast.makeText(
+                    context,
+                    "Próximamente (Mark as seen)",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            true
+        }.show(parentFragmentManager, "dialog")
+
+//        val bundle = bundleOf(
+//            KEY_BOTTOM_SHEET_MENU_TITLE to "Menu",
+//            KEY_BOTTOM_SHEET_MENU_XML_MENU_RESOURCE to R.menu.latest_episode_clicked_menu
+//        )
+//        findNavController().navigate(R.id.navigation_bottom_sheet_menu, bundle)
     }
 }

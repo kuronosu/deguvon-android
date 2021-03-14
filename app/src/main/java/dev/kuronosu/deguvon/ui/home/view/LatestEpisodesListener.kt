@@ -4,4 +4,5 @@ import dev.kuronosu.deguvon.datasource.model.LatestEpisode
 
 interface LatestEpisodesListener {
     fun onEpisodeClicked(episode: LatestEpisode, position: Int)
+    fun onEpisodeClickedLong(episode: LatestEpisode, position: Int)
 }
