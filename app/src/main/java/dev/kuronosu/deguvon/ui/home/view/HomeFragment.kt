@@ -19,7 +19,7 @@ import dev.kuronosu.deguvon.utils.HorizontalMarginItemDecorationLayout
 class HomeFragment : Fragment(), LatestEpisodesListener {
     private var _binding: FragmentHomeBinding? = null
     private lateinit var latestEpisodesAdapter: LatestEpisodesAdapter
-    private val viewmodel: HomeViewModel by navGraphViewModels(R.id.mobile_navigation)
+    private val viewModel: HomeViewModel by navGraphViewModels(R.id.mobile_navigation)
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -33,8 +33,7 @@ class HomeFragment : Fragment(), LatestEpisodesListener {
                 resources.getDimension(R.dimen.home_rv_padding).toInt()
             )
         )
-        //viewmodel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        viewmodel.setUpContext(requireContext())
+        viewModel.setUpContext(requireContext())
         latestEpisodesAdapter = LatestEpisodesAdapter(this)
         binding.rvLatestEpisodes.apply {
             layoutManager =
@@ -46,7 +45,7 @@ class HomeFragment : Fragment(), LatestEpisodesListener {
     }
 
     private fun observeViewModel() {
-        viewmodel.latestEpisodes.observe(viewLifecycleOwner, { latestEpisodes ->
+        viewModel.latestEpisodes.observe(viewLifecycleOwner, { latestEpisodes ->
             latestEpisodesAdapter.updateData(latestEpisodes)
             binding.rvLatestEpisodes.visibility = View.VISIBLE
             binding.shimmerPlaceholderHomeLatestEpisodes.visibility = View.GONE
@@ -60,40 +59,23 @@ class HomeFragment : Fragment(), LatestEpisodesListener {
 
     override fun onStart() {
         super.onStart()
-        viewmodel.refresh()
+        viewModel.refresh()
     }
 
     override fun onEpisodeClicked(episode: LatestEpisode, position: Int) {
     }
 
     override fun onEpisodeClickedLong(episode: LatestEpisode, position: Int) {
-        BottomSheetMenu.newInstance(R.menu.latest_episode_clicked_menu) {
+        BottomSheetMenu.newInstance(
+            R.menu.latest_episode_clicked_menu, episode.anime.name
+        ) { it, c ->
+            val toast = Toast.makeText(c, "Próximamente", Toast.LENGTH_SHORT)
             when (it.itemId) {
-                R.id.play -> Toast.makeText(context, "Próximamente (Play)", Toast.LENGTH_SHORT)
-                    .show()
-                R.id.download -> Toast.makeText(
-                    context,
-                    "Próximamente (Download)",
-                    Toast.LENGTH_SHORT
-                ).show()
-                R.id.anime_details -> Toast.makeText(
-                    context,
-                    "Próximamente (Anime details)",
-                    Toast.LENGTH_SHORT
-                ).show()
-                R.id.mark_as_seen -> Toast.makeText(
-                    context,
-                    "Próximamente (Mark as seen)",
-                    Toast.LENGTH_SHORT
-                ).show()
+                R.id.play -> toast.show()
+                R.id.download -> toast.show()
+                R.id.anime_details -> toast.show()
+                R.id.mark_as_seen -> toast.show()
             }
-            true
-        }.show(parentFragmentManager, "dialog")
-
-//        val bundle = bundleOf(
-//            KEY_BOTTOM_SHEET_MENU_TITLE to "Menu",
-//            KEY_BOTTOM_SHEET_MENU_XML_MENU_RESOURCE to R.menu.latest_episode_clicked_menu
-//        )
-//        findNavController().navigate(R.id.navigation_bottom_sheet_menu, bundle)
+        }.show(parentFragmentManager, "bottom_sheet_menu")
     }
 }

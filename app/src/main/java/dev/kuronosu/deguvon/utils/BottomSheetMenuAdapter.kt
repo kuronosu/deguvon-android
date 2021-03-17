@@ -1,17 +1,17 @@
 package dev.kuronosu.deguvon.utils
 
-import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import dev.kuronosu.deguvon.R
 
 
-class BottomSheetMenuAdapter(private val listener: MenuItem.OnMenuItemClickListener) :
+class BottomSheetMenuAdapter(private val listener: ClickHandler) :
     RecyclerView.Adapter<BottomSheetMenuAdapter.ViewHolder>() {
 
     private val items = ArrayList<MenuItem>()
@@ -32,7 +32,7 @@ class BottomSheetMenuAdapter(private val listener: MenuItem.OnMenuItemClickListe
         holder.tvText.text = item.title
         holder.ivIcon.setImageDrawable(item.icon)
         holder.itemView.setOnClickListener {
-            listener.onMenuItemClick(item)
+            listener(item, holder.tvText.context)
         }
     }
 
