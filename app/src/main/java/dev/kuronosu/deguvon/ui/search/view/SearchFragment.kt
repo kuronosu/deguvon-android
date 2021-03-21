@@ -5,13 +5,16 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.kuronosu.deguvon.R
 import dev.kuronosu.deguvon.databinding.FragmentSearchBinding
 import dev.kuronosu.deguvon.datasource.model.Anime
+import dev.kuronosu.deguvon.ui.animeDetails.KEY_ANIME
 import dev.kuronosu.deguvon.ui.search.SearchViewModel
 import dev.kuronosu.deguvon.utils.GridMarginItemDecorationLayout
 
@@ -111,6 +114,7 @@ class SearchFragment : Fragment(), SearchAnimeListener {
     }
 
     override fun onAnimeClicked(anime: Anime, position: Int) {
-
+        val bundle = bundleOf(KEY_ANIME to anime)
+        findNavController().navigate(R.id.navigation_anime_details, bundle)
     }
 }

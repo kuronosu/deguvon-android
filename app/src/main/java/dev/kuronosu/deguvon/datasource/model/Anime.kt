@@ -1,5 +1,11 @@
 package dev.kuronosu.deguvon.datasource.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
+
+@Parcelize
+@Serializable
 data class Anime(
     val flvid: Int,
     val name: String,
@@ -17,4 +23,4 @@ data class Anime(
     val banner: String,
     val relations: List<Relation>,
     val episodes: List<Episode>
-)
+) : Parcelable

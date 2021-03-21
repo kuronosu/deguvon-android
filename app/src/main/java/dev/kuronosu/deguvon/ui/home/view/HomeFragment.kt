@@ -18,9 +18,9 @@ import dev.kuronosu.deguvon.utils.HorizontalMarginItemDecorationLayout
 
 class HomeFragment : Fragment(), LatestEpisodesListener {
     private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
     private lateinit var latestEpisodesAdapter: LatestEpisodesAdapter
     private val viewModel: HomeViewModel by navGraphViewModels(R.id.mobile_navigation)
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,

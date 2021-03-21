@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_navigation_search_to_navigation_latest_episode_bottom_sheet"
             app:destination="@id/navigation_bottom_sheet_menu" />
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_anime_details"
+            app:destination="@id/navigation_anime_details" />
     </fragment>
 
     <fragment
@@ -34,5 +37,15 @@
         android:id="@+id/navigation_bottom_sheet_menu"
         android:name="dev.kuronosu.deguvon.utils.BottomSheetMenu"
         android:label="LatestEpisodeMenuListDialogFragment"
-        tools:layout="@layout/fragment_bottom_sheet_menu_dialog" />
+        tools:layout="@layout/fragment_bottom_sheet_menu_dialog" >
+        <action
+            android:id="@+id/action_navigation_bottom_sheet_menu_to_navigation_anime_details"
+            app:destination="@id/navigation_anime_details" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/navigation_anime_details"
+        android:name="dev.kuronosu.deguvon.ui.animeDetails.AnimeDetailsDialogFragment"
+        android:label="AnimeDetailsDialogFragment"
+        tools:layout="@layout/dialog_fragment_anime_details" />
 </navigation>
