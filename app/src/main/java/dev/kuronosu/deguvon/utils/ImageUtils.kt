@@ -8,6 +8,14 @@ import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 
 
+fun ImageView.load(url: String) {
+    Glide
+        .with(this.context)
+        .load(url)
+        .transition(withCrossFade())
+        .into(this)
+}
+
 fun ImageView.load(url: String, placeholder: Drawable) {
     Glide
         .with(this.context)

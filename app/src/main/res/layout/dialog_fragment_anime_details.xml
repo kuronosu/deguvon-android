@@ -5,46 +5,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.animeDetails.AnimeDetailsDialogFragment"
-    tools:ignore="MergeRootFrame">
+    tools:context=".ui.animeDetails.AnimeDetailsDialogFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="true">
+        android:layout_height="@dimen/app_bar_height">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="250dp"
             android:fitsSystemWindows="true"
+            app:collapsedTitleTextAppearance="@style/AnimeDetails.TextCollapsed"
             app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginBottom="25dp"
+            app:expandedTitleMarginStart="25dp"
+            app:expandedTitleTextAppearance="@style/AnimeDetails.TextExpanded"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:expandedTitleTextAppearance="@style/AnimeDetailsTextExpanded"
-            app:collapsedTitleTextAppearance="@style/AnimeDetailsTextExpanded"
-            app:toolbarId="@+id/toolbar">
+            app:toolbarId="@+id/toolbar"
+            tools:title="Test">
 
             <ImageView
-                android:id="@+id/header"
+                android:id="@+id/cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:adjustViewBounds="true"
                 android:background="@drawable/shape_anime_details_image_background"
                 android:fitsSystemWindows="true"
+                android:foreground="?selectableItemBackground"
                 android:scaleType="centerCrop"
+                android:transitionName="img"
                 app:layout_collapseMode="parallax" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:layout_gravity="top"
+                android:layout_height="wrap_content"
+                android:alpha="0.3"
+                android:background="@drawable/shape_anime_details_image_background"
                 android:fitsSystemWindows="true" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:layout_gravity="bottom"
-                android:background="@drawable/scrim" />
+                android:layout_height="140dp"
+                android:layout_gravity="top"
+                android:fitsSystemWindows="true" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/detail_toolbar"
@@ -57,15 +62,218 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/anime_detail_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:descendantFocusability="blocksDescendants"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="@dimen/dimen_8"
+                android:layout_marginEnd="16dp"
+                android:paddingTop="5dp"
+                android:text="Especial"
+                android:textAppearance="@style/AnimeDetails.Title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/type_state_separator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="2dp"
+                android:text="-"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                app:layout_constraintBottom_toBottomOf="@id/type"
+                app:layout_constraintLeft_toRightOf="@id/type" />
+
+            <TextView
+                android:id="@+id/state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Proximamente"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                app:layout_constraintBottom_toBottomOf="@id/type"
+                app:layout_constraintLeft_toRightOf="@id/type_state_separator" />
+
+            <TextView
+                android:id="@+id/video_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="####"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                app:layout_constraintBottom_toBottomOf="@id/state"
+                app:layout_constraintLeft_toRightOf="@id/state" />
+
+            <Button
+                android:id="@+id/play_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="8dp"
+                android:text="@string/watch_now"
+                android:textSize="16dp"
+                app:icon="@drawable/ic_baseline_play_arrow_24"
+                app:layout_constraintLeft_toLeftOf="@id/type"
+                app:layout_constraintTop_toBottomOf="@id/type"
+                app:layout_constraintWidth_percent="0.5" />
+
+            <TextView
+                android:id="@+id/score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_8"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:textSize="@dimen/font_size_24"
+                app:layout_constraintBottom_toBottomOf="@id/play_button"
+                app:layout_constraintLeft_toRightOf="@id/play_button"
+                app:layout_constraintTop_toTopOf="@id/play_button"
+                tools:text="0000" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_baseline_star_24"
+                app:layout_constraintBottom_toBottomOf="@id/score"
+                app:layout_constraintLeft_toRightOf="@id/score"
+                app:layout_constraintTop_toTopOf="@id/score"
+                app:tint="@color/score_color" />
+
+            <TextView
+                android:id="@+id/synopsis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:animateLayoutChanges="true"
+                android:ellipsize="end"
+                android:maxLines="3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/play_button"
+                tools:text="ASDASDASDASDASDASDaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
+
+            <TextView
+                android:id="@+id/synopsis2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                app:layout_constraintLeft_toLeftOf="@id/synopsis"
+                app:layout_constraintRight_toRightOf="@id/synopsis"
+                app:layout_constraintTop_toTopOf="@id/synopsis" />
+
+            <View
+                android:id="@+id/sep_1"
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#C9C9C9"
+                app:layout_constraintTop_toBottomOf="@id/synopsis" />
+
+
+
+            <!--<TextView
+                android:id="@+id/details_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:text="Detalles"
+                android:textAppearance="@style/AnimeDetails.Title"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sep_1" />-->
+
+            <!--<TextView
+                android:id="@+id/anime_type_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Tipo:"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_label"
+                app:layout_constraintWidth_percent="0.2" />-->
+
+            <!--<TextView
+                android:id="@+id/type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Especial"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                app:layout_constraintBottom_toBottomOf="@id/anime_type_label"
+                app:layout_constraintLeft_toRightOf="@id/anime_type_label"
+                app:layout_constraintTop_toTopOf="@id/anime_type_label"
+                app:layout_constraintWidth_percent="0.3" />-->
+
+            <!--<TextView
+                android:id="@+id/anime_state_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Estado:"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/anime_type_label"
+                app:layout_constraintWidth_percent="0.2" />-->
+
+            <!--<TextView
+                android:id="@+id/state"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Proximamente"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                app:layout_constraintBottom_toBottomOf="@id/anime_state_label"
+                app:layout_constraintLeft_toRightOf="@id/anime_state_label"
+                app:layout_constraintTop_toTopOf="@id/anime_state_label"
+                app:layout_constraintWidth_percent="0.30" />-->
+
+            <!-- <TextView
+                 android:id="@+id/anime_id_label"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:text="ID:"
+                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                 app:layout_constraintLeft_toRightOf="@id/type"
+                 app:layout_constraintTop_toBottomOf="@id/details_label"
+                 app:layout_constraintWidth_percent="0.3" />-->
+
+            <!--<TextView
+                android:id="@+id/aid"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="####"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                app:layout_constraintBottom_toBottomOf="@id/anime_id_label"
+                app:layout_constraintLeft_toRightOf="@id/anime_id_label"
+                app:layout_constraintTop_toTopOf="@id/anime_id_label"
+                app:layout_constraintWidth_percent="0.15" />-->
+
+            <!--<TextView
+                android:id="@+id/anime_score_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Puntuación:"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
+                app:layout_constraintLeft_toRightOf="@id/state"
+                app:layout_constraintTop_toBottomOf="@id/anime_id_label"
+                app:layout_constraintWidth_percent="0.3" />-->
+
+            <!-- TODO -->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,7 +281,6 @@
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@+id/anime_detail_container"
         app:layout_anchorGravity="top|end"
-        app:srcCompat="@android:drawable/stat_notify_chat" />
+        app:srcCompat="@android:drawable/stat_notify_chat" />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-

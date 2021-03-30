@@ -36,6 +36,7 @@
             android:layout_marginBottom="6dp"
             android:background="@drawable/shape_search_anime_type"
             android:lines="1"
+            android:textColor="@color/black"
             android:maxWidth="42dp"
             android:minWidth="20dp"
             android:paddingHorizontal="3dp"
