@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import dev.kuronosu.deguvon.R
 
 
-class BottomSheetMenuAdapter(private val listener: ClickHandler) :
+class BottomSheetMenuAdapter(
+    private val listener: ClickHandler,
+    private val menu: BottomSheetMenu
+) :
     RecyclerView.Adapter<BottomSheetMenuAdapter.ViewHolder>() {
 
     private val items = ArrayList<MenuItem>()
@@ -32,7 +34,7 @@ class BottomSheetMenuAdapter(private val listener: ClickHandler) :
         holder.tvText.text = item.title
         holder.ivIcon.setImageDrawable(item.icon)
         holder.itemView.setOnClickListener {
-            listener(item, holder.tvText.context)
+            if (listener(item, holder.tvText.context)) menu.dismiss()
         }
     }
 

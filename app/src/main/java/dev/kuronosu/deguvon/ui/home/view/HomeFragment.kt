@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.kuronosu.deguvon.R
@@ -71,10 +72,20 @@ class HomeFragment : Fragment(), LatestEpisodesListener {
         ) { it, c ->
             val toast = Toast.makeText(c, "Próximamente", Toast.LENGTH_SHORT)
             when (it.itemId) {
-                R.id.play -> toast.show()
-                R.id.download -> toast.show()
-                R.id.anime_details -> toast.show()
-                R.id.mark_as_seen -> toast.show()
+                R.id.play -> {
+                    toast.show()
+                    false
+                }
+                R.id.download -> {
+                    toast.show()
+                    false
+                }
+                R.id.anime_details -> viewModel.onNavigateToAnime(episode, findNavController())
+                R.id.mark_as_seen -> {
+                    toast.show()
+                    false
+                }
+                else -> false
             }
         }.show(parentFragmentManager, "bottom_sheet_menu")
     }

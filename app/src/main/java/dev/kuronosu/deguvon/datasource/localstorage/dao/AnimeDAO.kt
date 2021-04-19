@@ -25,7 +25,7 @@ interface AnimeDAO {
     fun searchAnimesByPages(search: String, limit: Int, offset: Int): List<AnimeRoomModel>
 
     @Query("select * FROM animes where flvid LIKE :aid")
-    fun getAnimeByID(aid: String): AnimeRoomModel
+    fun getAnimeByID(aid: String): AnimeRoomModel?
 
     @Query("DELETE FROM animes")
     fun clearAnimes()

@@ -18,7 +18,7 @@ import dev.kuronosu.deguvon.databinding.FragmentBottomSheetMenuDialogBinding
 const val KEY_BOTTOM_SHEET_MENU_XML_MENU_RESOURCE = "XML_MENU_RESOURCE"
 const val KEY_BOTTOM_SHEET_MENU_TITLE = "TITLE"
 
-typealias ClickHandler = (MenuItem, Context) -> Unit
+typealias ClickHandler = (MenuItem, Context) -> Boolean
 
 open class BottomSheetMenu : BottomSheetDialogFragment() {
     private val viewModel: BottomSheetMenuViewModel by navGraphViewModels(R.id.mobile_navigation)
@@ -44,7 +44,7 @@ open class BottomSheetMenu : BottomSheetDialogFragment() {
     }
 
     private fun setUpAdapter(h: ClickHandler) {
-        adapter = BottomSheetMenuAdapter(h)
+        adapter = BottomSheetMenuAdapter(h, this)
         binding.rvMenu.adapter = adapter
     }
 

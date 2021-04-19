@@ -149,6 +149,11 @@ class Repository(private val applicationContext: Context) {
         dbTypes = db.animeDAO().getTypes()
         dbGenres = db.animeDAO().getGenres()
     }
+
+    fun findAnime(id: Int): Anime? {
+        return db.animeDAO().getAnimeByID(id.toString())
+            ?.asInterfaceModel(dbStates, dbTypes, dbGenres)
+    }
 }
 
 private lateinit var INSTANCE: Repository

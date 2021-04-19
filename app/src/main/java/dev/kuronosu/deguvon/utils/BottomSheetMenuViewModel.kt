@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 class BottomSheetMenuViewModel : ViewModel() {
     private val _handler = MutableLiveData<ClickHandler> { _, c ->
         Toast.makeText(c, "Error", Toast.LENGTH_SHORT).show()
+        false
     }
     val handler: LiveData<ClickHandler> = _handler
 
