@@ -1,6 +1,7 @@
 package dev.kuronosu.deguvon.ui.animeDetails
 
 import android.animation.ObjectAnimator
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -33,19 +34,28 @@ class AnimeDetailsDialogFragment : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DialogFragmentAnimeDetailsBinding.inflate(inflater, container, false)
+        binding.detailToolbar.navigationIcon?.setTint(Color.WHITE)
+        binding.detailToolbar.setTitleTextColor(Color.WHITE)
+        binding.detailToolbar.setNavigationOnClickListener { dismiss() }
         val anime = requireArguments().getParcelable<Anime>(KEY_ANIME)!!
         binding.cover.load("https://kuronosu.dev/${anime.cover}")
         binding.toolbarLayout.title = anime.name
-        binding.synopsis.text = anime.synopsis
-        binding.synopsis2.text = anime.synopsis
+        binding.synopsis.visibility = View.GONE
+        binding.synopsis2.visibility = View.GONE
+        if (anime.synopsis.isNotBlank()) {
+            binding.synopsis.text = anime.synopsis
+            binding.synopsis2.text = anime.synopsis
+            binding.synopsis.visibility = View.VISIBLE
+            binding.synopsis2.visibility = View.INVISIBLE
+        }
         binding.type.text = anime.type.name
         binding.state.text = anime.state.name
         binding.score.text = anime.score.toString()
 
-        when (anime.episodes.size) {
-            0 -> binding.videoCount.text = "Sin videos"
-            1 -> binding.videoCount.text = "${anime.episodes.size} video"
-            else -> binding.videoCount.text = "${anime.episodes.size} videos"
+        binding.videoCount.text = when (anime.episodes.size) {
+            0 -> "Sin videos"
+            1 -> "${anime.episodes.size} video"
+            else -> "${anime.episodes.size} videos"
         }
 
         binding.synopsis.setOnClickListener {

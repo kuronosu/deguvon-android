@@ -7,6 +7,7 @@
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/lime_200</item>
+        <item name="colorAccent">@color/lime_200</item>
         <item name="colorSecondaryVariant">@color/lime_dark</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
